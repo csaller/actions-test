@@ -16,7 +16,8 @@ jobs:
       - name: Find all folders and build filter
         run: |
           cd dynamic_repo
-          find * -maxdepth 0 -type d -exec echo '{}: {}' \; >> filter.yaml
+          find * -maxdepth 0 -type d -exec echo '{}: {}' \; >> ../filter.yaml
+          cd ../
           cat filter.yaml
 
       - uses: dorny/paths-filter@v3
