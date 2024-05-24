@@ -1,0 +1,38 @@
+name: Dynamic build image on file change
+
+on:
+  workflow_dispatch:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      folders: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - run:
+          name: Find all folders and build filter
+          command: |
+            find dynamic_repo/* -maxdepth 0 -type d -exec echo '{}: {}\n' >> filter.yaml
+            cat filter.yaml
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: filter.yaml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: changes
+    strategy:
+      matrix:
+        folder: ${{ fromJSON(needs.changes.outputs.folders) }}
+    steps:
+      - uses: actions/checkout@v4
+      - run:
+          name: Echo folder
+          command: |
+            echo 'Folder with changes: ${{ matrix.folder }}'
