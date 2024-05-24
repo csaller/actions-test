@@ -2,6 +2,9 @@ name: Dynamic build image on file change
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   changes:
