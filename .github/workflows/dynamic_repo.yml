@@ -14,17 +14,12 @@ jobs:
     outputs:
       folders: ${{ steps.filter.outputs.changes }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Find all folders and build filter
-        run: |
-          find dynamic_repo* -maxdepth 0 -type d -exec echo '{}: {}' \; >> filter.yaml
-          cat filter.yaml
-
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          filters: filter.yaml
+          filters: |
+            folder1: dynamic_repo/folder1
+            folder2: dynamic_repo/folder2
 
   build:
     runs-on: ubuntu-latest

@@ -1,2 +1,0 @@
-Test file on folder 1
-update file to trigger filter
