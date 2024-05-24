@@ -2,10 +2,10 @@ name: Dynamic build image on file change
 
 on:
   workflow_dispatch:
-  push:
-    branches:
+  pull_request:
+    branches: # PRs to the following branches will trigger the workflow
       - main
-
+    
 jobs:
   changes:
     runs-on: ubuntu-latest
