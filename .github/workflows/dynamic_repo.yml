@@ -19,8 +19,8 @@ jobs:
         id: filter
         with:
           filters: |
-            folder1: dynamic_repo/folder1
-            folder2: dynamic_repo/folder2
+            folder1: dynamic_repo/folder1/**
+            folder2: dynamic_repo/folder2/**
 
   build:
     runs-on: ubuntu-latest
