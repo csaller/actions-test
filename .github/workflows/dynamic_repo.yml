@@ -13,11 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run:
-          name: Find all folders and build filter
-          command: |
-            find dynamic_repo/* -maxdepth 0 -type d -exec echo '{}: {}\n' >> filter.yaml
-            cat filter.yaml
+      - name: Find all folders and build filter
+        run: |
+          find dynamic_repo/* -maxdepth 0 -type d -exec echo '{}: {}\n' >> filter.yaml
+          cat filter.yaml
 
       - uses: dorny/paths-filter@v3
         id: filter
@@ -32,7 +31,6 @@ jobs:
         folder: ${{ fromJSON(needs.changes.outputs.folders) }}
     steps:
       - uses: actions/checkout@v4
-      - run:
-          name: Echo folder
-          command: |
-            echo 'Folder with changes: ${{ matrix.folder }}'
+      - name: Echo folder
+        run: |
+          echo 'Folder with changes: ${{ matrix.folder }}'
