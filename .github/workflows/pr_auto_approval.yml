@@ -1,0 +1,22 @@
+name:  Auto approve PRs on s apecific path
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened]
+    paths-ignore:
+      - '!pr_auto_approval/**'
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Approve Pull Request
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: $PR_NUMBER
