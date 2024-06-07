@@ -3,6 +3,8 @@ name:  Auto approve PRs on a specific path
 on:
   workflow_dispatch:
   pull_request:
+    paths:
+      - 'pr_auto_approval/**'
     paths-ignore:
       - '!pr_auto_approval/**'
 
