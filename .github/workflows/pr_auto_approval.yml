@@ -10,7 +10,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write
     steps:
       - name: Approve Pull Request
         uses: juliangruber/approve-pull-request-action@v2
