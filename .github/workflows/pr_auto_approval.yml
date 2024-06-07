@@ -1,4 +1,4 @@
-name:  Auto approve PRs on s apecific path
+name:  Auto approve PRs on a specific path
 
 on:
   workflow_dispatch:
@@ -12,6 +12,18 @@ jobs:
     permissions:
       pull-requests: write
     steps:
+      - name: Add comment to PR
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Since this PR only touches the \`pr_auto_approval/\` folder, it will be automatically approved!'
+            })
+
       - name: Approve Pull Request
         uses: juliangruber/approve-pull-request-action@v2
         with:
