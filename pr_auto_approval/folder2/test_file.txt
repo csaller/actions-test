@@ -1,2 +1,2 @@
 Test file on folder 2
-test
+trigger
