@@ -15,4 +15,4 @@ jobs:
     
     steps:
       - name: print-branch
-        run: echo $BRANCH_NAME
+        run: echo "Branch name - $BRANCH_NAME"
