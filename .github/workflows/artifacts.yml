@@ -1,0 +1,20 @@
+name: Generate and store artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate artifacts
+        run: |
+          mkdir -p artifacts
+          for i in {1. .5}; do
+            curl "https://baconipsum.com/api/?type=meat-and-filler&paras=3&format=text" > artifacts/artifact_$i.txt
+          done
+      - name: Store generated artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: artifacts/
+  
