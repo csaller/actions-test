@@ -8,13 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo event
-        run: echo ${{ event }}
+        run: echo ${{ github.run_number }}
+
       # - name: Cache assets
       #   id: cache-assets
       #   uses: actions/cache@v4
       #   with:
       #     path: artifacts
-      #     key: ${{ event.head }}-assets
+      #     key: ${{ github.event.head }}-assets
 
       - name: Generate artifacts
         run: |
