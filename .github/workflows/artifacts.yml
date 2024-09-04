@@ -7,15 +7,12 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo event
-        run: echo ${{ github.run_number }}
-
-      # - name: Cache assets
-      #   id: cache-assets
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: artifacts
-      #     key: ${{ github.event.head }}-assets
+      - name: Cache assets
+        id: cache-assets
+        uses: actions/cache@v4
+        with:
+          path: artifacts
+          key: ${{ github.run_number }}-assets
 
       - name: Generate artifacts
         run: |
@@ -23,8 +20,28 @@ jobs:
           for i in {1..10}; do
             curl "https://baconipsum.com/api/?type=meat-and-filler&paras=3&format=text" > artifacts/artifact_$i.txt
           done
-      - name: Store generated artifacts
-        uses: actions/upload-artifact@v4
+
+      # - name: Store generated artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ github.run_number }}-assets
+      #     path: artifacts/*
+      #     compression-level: 0
+  
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attach cache
+        id: cache-assets
+        uses: actions/cache@v4
         with:
-          path: artifacts/*
-          compression-level: 0
+          path: artifacts
+          key: ${{ github.run_number }}-assets
+
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: ${{ github.run_number }}-assets
+      
+      - name: echo path
+        run: ls -lah
