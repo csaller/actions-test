@@ -7,6 +7,15 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
+      - name: Echo event
+        run: echo ${{ event }}
+      # - name: Cache assets
+      #   id: cache-assets
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: artifacts
+      #     key: ${{ event.head }}-assets
+
       - name: Generate artifacts
         run: |
           mkdir -p artifacts
