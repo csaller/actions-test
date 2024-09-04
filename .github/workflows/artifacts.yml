@@ -45,4 +45,4 @@ jobs:
       #     name: ${{ github.run_number }}-assets
       
       - name: echo path
-        run: ls -lah
+        run: tree -a
