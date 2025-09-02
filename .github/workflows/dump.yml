@@ -1,4 +1,4 @@
-name: build app
+name: dump context
 on:
   workflow_dispatch:
 
@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: Dumps context
-        run: echo ${{ toJSON(github) }}
+        run: echo "${{ toJSON(github) }}"
