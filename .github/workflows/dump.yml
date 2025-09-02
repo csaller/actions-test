@@ -1,0 +1,12 @@
+name: build app
+on:
+  workflow_dispatch:
+
+jobs:
+  dump:
+    name: "Dumps event context"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dumps context
+        run: echo ${{ toJSON(github) }}
