@@ -1,0 +1,46 @@
+name: Run Terraform with local state on PR
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./terraform_override
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'terraform_override/**'
+      - '.github/workflows/terraform_local.yml'
+  workflow_dispatch:
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.4
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Initialize Terraform
+        run: terraform init -input=false
+      
+      - name: Pull state from remote
+        run: terraform state pull > terraform.tfstate
+      
+      - name: Clear current Terraform configuration
+        run: rm -rf ./.terraform
+      
+      - name: Copy Terraform Override configuration
+        run: cp -r ../terraform_override/* ./
+      
+      - name: Re-initialize Terraform with local state
+        run: terraform init -input=false
+
+      - name: Plan Terraform changes
+        run: terraform plan -input=false
