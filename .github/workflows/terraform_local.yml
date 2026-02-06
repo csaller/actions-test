@@ -37,7 +37,7 @@ jobs:
         run: rm -rf ./.terraform
       
       - name: Copy Terraform Override configuration
-        run: cp -r ../terraform_override/* ./
+        run: cp -r ./terraform_override/* ./
       
       - name: Re-initialize Terraform with local state
         run: terraform init -input=false
